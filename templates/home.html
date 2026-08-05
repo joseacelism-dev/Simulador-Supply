@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">Simulador educativo de supply chain</p>
+    <h1>SCM SimLab 360</h1>
+    <p>
+      Plataforma para aprender gestion de cadenas de suministro mediante decisiones,
+      eventos, indicadores y escenarios progresivos.
+    </p>
+    <div class="actions">
+      <a class="primary" href="{% url 'accounts:register' %}">Crear cuenta de estudiante</a>
+      <a class="secondary" href="{% url 'accounts:login' %}">Ingresar</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
+

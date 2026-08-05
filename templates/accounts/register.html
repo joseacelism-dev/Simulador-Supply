@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Registro | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="auth-panel">
+  <h1>Registro de estudiante</h1>
+  <p>Crea tu cuenta para iniciar la configuracion de tu empresa en las siguientes fases.</p>
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="primary">Crear cuenta</button>
+  </form>
+</section>
+{% endblock %}
+

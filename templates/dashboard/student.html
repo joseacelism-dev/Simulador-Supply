@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Panel estudiante | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Panel del estudiante</p>
+  <h1>Bienvenido, {{ user.first_name|default:user.username }}</h1>
+  <div class="grid">
+    <article class="metric">
+      <span>Rol</span>
+      <strong>Estudiante</strong>
+    </article>
+    <article class="metric">
+      <span>Fase actual</span>
+      <strong>Base del sistema</strong>
+    </article>
+    <article class="metric">
+      <span>Proximo modulo</span>
+      <strong>Empresas y catalogos</strong>
+    </article>
+  </div>
+</section>
+{% endblock %}
+

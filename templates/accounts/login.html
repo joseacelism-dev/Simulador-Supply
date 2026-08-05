@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Ingresar | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="auth-panel">
+  <h1>Ingreso al sistema</h1>
+  <p>Accede a tu panel segun tu rol dentro de la plataforma.</p>
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="primary">Ingresar</button>
+  </form>
+</section>
+{% endblock %}
+
