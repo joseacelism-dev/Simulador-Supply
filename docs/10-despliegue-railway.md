@@ -8,6 +8,7 @@ Objetivo: publicar SCM SimLab 360 en Railway con PostgreSQL, archivos estaticos 
 - `whitenoise` para servir archivos estaticos desde Django.
 - `dj-database-url` y `psycopg` para usar PostgreSQL por `DATABASE_URL`.
 - `Procfile` y `railway.json` con comando de arranque.
+- `.python-version` para fijar Python 3.12 en Railway.
 - `.env.example` con variables requeridas.
 
 ## Variables recomendadas en Railway
