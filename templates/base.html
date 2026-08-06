@@ -15,6 +15,7 @@
         <a href="{% url 'accounts:post_login_redirect' %}">Panel</a>
         {% if user.is_estudiante %}
           <a href="{% url 'companies:list' %}">Mis empresas</a>
+          <a href="{% url 'simulations:list' %}">Simulaciones</a>
         {% endif %}
         <form method="post" action="{% url 'accounts:logout' %}">
           {% csrf_token %}

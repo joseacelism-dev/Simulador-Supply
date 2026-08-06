@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}{{ simulation.name }} | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">{{ simulation.company.name }}</p>
+  <h1>{{ simulation.name }}</h1>
+  <p>Escenario: {{ simulation.scenario }} · Estado: {{ simulation.get_status_display }}</p>
+  <div class="grid">
+    <article class="metric">
+      <span>Periodo actual</span>
+      <strong>{{ simulation.current_period_number }}/{{ simulation.total_periods }}</strong>
+    </article>
+    <article class="metric">
+      <span>Periodicidad</span>
+      <strong>{{ simulation.get_periodicity_display }}</strong>
+    </article>
+    <article class="metric">
+      <span>Estado</span>
+      <strong>{{ simulation.get_status_display }}</strong>
+    </article>
+  </div>
+</section>
+
+{% if current_period and current_period.is_open %}
+<section class="auth-panel section-gap">
+  <h2>Registrar decision del periodo {{ current_period.number }}</h2>
+  <form method="post" action="{% url 'simulations:decision_create' simulation.pk %}" class="form">
+    {% csrf_token %}
+    {{ decision_form.as_p }}
+    <button type="submit" class="primary">Registrar decision</button>
+  </form>
+  <form method="post" action="{% url 'simulations:process_period' simulation.pk %}" class="inline-action">
+    {% csrf_token %}
+    <button type="submit" class="secondary">Cerrar y procesar periodo</button>
+  </form>
+</section>
+{% endif %}
+
+<section class="catalog-grid">
+  {% for period in simulation.periods.all %}
+    <article>
+      <h2>Periodo {{ period.number }}</h2>
+      <p>Estado: {{ period.get_status_display }}</p>
+      {% if period.result %}
+        <p>Puntaje operacional: {{ period.result.operational_score }}</p>
+        <p>{{ period.result.summary }}</p>
+      {% endif %}
+      <h3>Decisiones</h3>
+      {% for decision in period.decisions.all %}
+        <p>{{ decision.get_area_display }} · {{ decision.title }}</p>
+      {% empty %}
+        <p class="empty">Sin decisiones registradas.</p>
+      {% endfor %}
+      <h3>Eventos</h3>
+      {% for event in period.events.all %}
+        <p>{{ event.get_severity_display }} · {{ event.name }}</p>
+      {% empty %}
+        <p class="empty">Sin eventos registrados.</p>
+      {% endfor %}
+    </article>
+  {% endfor %}
+</section>
+{% endblock %}
+

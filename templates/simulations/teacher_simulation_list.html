@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Simulaciones realizadas | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Consulta docente</p>
+  <h1>Simulaciones realizadas</h1>
+  <div class="list">
+    {% for simulation in simulations %}
+      <div class="list-row">
+        <strong>{{ simulation.name }}</strong>
+        <span>{{ simulation.company.owner.username }} · {{ simulation.company.name }} · {{ simulation.get_status_display }}</span>
+      </div>
+    {% empty %}
+      <p class="empty">Aun no existen simulaciones.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

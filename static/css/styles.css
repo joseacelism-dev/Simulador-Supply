@@ -232,6 +232,19 @@ a {
   margin: 0 0 14px;
 }
 
+.catalog-grid h3 {
+  font-size: 16px;
+  margin: 18px 0 8px;
+}
+
+.section-gap {
+  margin-top: 24px;
+}
+
+.inline-action {
+  margin-top: 18px;
+}
+
 @media (max-width: 700px) {
   .topbar {
     align-items: flex-start;

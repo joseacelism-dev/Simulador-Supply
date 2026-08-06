@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Simulaciones | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Motor de simulacion</p>
+  <h1>Mis simulaciones</h1>
+  <div class="list">
+    {% for simulation in simulations %}
+      <a class="list-row" href="{% url 'simulations:detail' simulation.pk %}">
+        <strong>{{ simulation.name }}</strong>
+        <span>{{ simulation.company.name }} · {{ simulation.get_status_display }} · Periodo {{ simulation.current_period_number }}/{{ simulation.total_periods }}</span>
+      </a>
+    {% empty %}
+      <p class="empty">Aun no tienes simulaciones. Crea una desde el detalle de una empresa.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

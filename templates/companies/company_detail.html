@@ -26,6 +26,7 @@
     <a class="secondary" href="{% url 'products:raw_material_create' company.pk %}">Agregar materia prima</a>
     <a class="secondary" href="{% url 'suppliers:create' company.pk %}">Agregar proveedor</a>
     <a class="secondary" href="{% url 'customers:create' company.pk %}">Agregar cliente</a>
+    <a class="secondary" href="{% url 'simulations:create_for_company' company.pk %}">Crear simulacion</a>
   </div>
 </section>
 
@@ -64,4 +65,3 @@
   </article>
 </section>
 {% endblock %}
-

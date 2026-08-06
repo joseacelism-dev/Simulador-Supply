@@ -12,7 +12,7 @@ https://github.com/joseacelism-dev/Simulador-Supply
 
 ## Estado Actual
 
-Fase actual implementada: **Fase 2 - Empresas y catalogos base**.
+Fase actual implementada: **Fase 3 - Motor de simulacion**.
 
 El proyecto ya incluye:
 
@@ -25,6 +25,8 @@ El proyecto ya incluye:
 - Empresas por estudiante.
 - Cinco tipos de empresa iniciales.
 - Catalogos base de productos, materias primas, proveedores y clientes.
+- Simulaciones por empresa.
+- Periodos, decisiones, eventos y resultados basicos.
 
 ## Stack Propuesto
 
@@ -61,6 +63,7 @@ Infraestructura:
 - [Plan de Fase 0](docs/00-fase-0.md)
 - [Plan de Fase 1](docs/01-fase-1-base-sistema.md)
 - [Plan de Fase 2](docs/02-fase-2-empresas-catalogos.md)
+- [Plan de Fase 3](docs/03-fase-3-motor-simulacion.md)
 - [Arquitectura propuesta](docs/arquitectura.md)
 - [Roadmap por fases](docs/roadmap.md)
 - [Reglas de desarrollo](docs/reglas-desarrollo.md)
