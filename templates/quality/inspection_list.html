@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Calidad | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Calidad</p>
+  <h1>Inspecciones</h1>
+  <div class="list">
+    {% for inspection in inspections %}
+      <a class="list-row" href="{% url 'quality:inspection_detail' inspection.pk %}">
+        <strong>{{ inspection.code }}</strong>
+        <span>{{ inspection.product.name }} · Defectos {{ inspection.defect_rate }}% · {{ inspection.get_status_display }}</span>
+      </a>
+    {% empty %}
+      <p class="empty">Aun no existen inspecciones.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

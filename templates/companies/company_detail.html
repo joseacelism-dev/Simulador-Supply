@@ -35,6 +35,9 @@
     <a class="secondary" href="{% url 'warehouses:create_for_company' company.pk %}">Crear almacen</a>
     <a class="secondary" href="{% url 'orders:create_for_company' company.pk %}">Crear pedido</a>
     <a class="secondary" href="{% url 'distribution:carrier_create_for_company' company.pk %}">Crear transportador</a>
+    <a class="secondary" href="{% url 'quality:inspection_create_for_company' company.pk %}">Inspeccion calidad</a>
+    <a class="secondary" href="{% url 'quality:complaint_create_for_company' company.pk %}">Registrar reclamo</a>
+    <a class="secondary" href="{% url 'reverse_logistics:return_create_for_company' company.pk %}">Crear devolucion</a>
   </div>
 </section>
 

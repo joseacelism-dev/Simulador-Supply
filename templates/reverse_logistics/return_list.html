@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Devoluciones | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Logistica inversa</p>
+  <h1>Devoluciones</h1>
+  <div class="list">
+    {% for return_request in returns %}
+      <a class="list-row" href="{% url 'reverse_logistics:return_detail' return_request.pk %}">
+        <strong>{{ return_request.code }}</strong>
+        <span>{{ return_request.order.code }} · {{ return_request.reason }} · {{ return_request.get_status_display }}</span>
+      </a>
+    {% empty %}
+      <p class="empty">Aun no existen devoluciones.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

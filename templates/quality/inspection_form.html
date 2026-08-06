@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Crear inspeccion | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="auth-panel">
+  <h1>Crear inspeccion de calidad</h1>
+  <p>Empresa: {{ company.name }}</p>
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ inspection_form.as_p }}
+    <h2>No conformidad</h2>
+    {{ nonconformance_form.as_p }}
+    <button type="submit" class="primary">Guardar inspeccion</button>
+  </form>
+</section>
+{% endblock %}
+

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ inspection.code }} | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">{{ inspection.company.name }}</p>
+  <h1>{{ inspection.code }}</h1>
+  <p>{{ inspection.product.name }} · {{ inspection.get_status_display }}</p>
+  <div class="grid">
+    <article class="metric">
+      <span>Inspeccionado</span>
+      <strong>{{ inspection.inspected_quantity }}</strong>
+    </article>
+    <article class="metric">
+      <span>No conforme</span>
+      <strong>{{ inspection.nonconforming_quantity }}</strong>
+    </article>
+    <article class="metric">
+      <span>Tasa defectos</span>
+      <strong>{{ inspection.defect_rate }}%</strong>
+    </article>
+  </div>
+</section>
+<section class="catalog-grid">
+  <article>
+    <h2>No conformidades</h2>
+    {% for item in inspection.nonconformances.all %}
+      <p>{{ item.defect_type }} · {{ item.quantity }} · {{ item.get_status_display }}</p>
+    {% empty %}
+      <p class="empty">Sin no conformidades.</p>
+    {% endfor %}
+  </article>
+</section>
+{% endblock %}
+

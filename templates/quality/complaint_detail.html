@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}{{ complaint.code }} | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">{{ complaint.company.name }}</p>
+  <h1>{{ complaint.code }}</h1>
+  <p>{{ complaint.product.name }} · {{ complaint.reason }} · {{ complaint.get_status_display }}</p>
+  <p>{{ complaint.description }}</p>
+</section>
+{% endblock %}
+

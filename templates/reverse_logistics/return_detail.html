@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}{{ return_request.code }} | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">{{ return_request.company.name }}</p>
+  <h1>{{ return_request.code }}</h1>
+  <p>{{ return_request.order.code }} · {{ return_request.reason }} · {{ return_request.get_status_display }}</p>
+</section>
+
+<section class="catalog-grid">
+  <article>
+    <h2>Productos retornados</h2>
+    {% for line in return_request.lines.all %}
+      <p>{{ line.product.name }} · {{ line.quantity }} · {{ line.condition }}</p>
+    {% endfor %}
+  </article>
+  <article>
+    <h2>Inspeccion</h2>
+    {% if return_request.inspection %}
+      <p>Aceptada {{ return_request.inspection.accepted_quantity }} · Rechazada {{ return_request.inspection.rejected_quantity }}</p>
+    {% else %}
+      <form method="post" action="{% url 'reverse_logistics:return_inspect' return_request.pk %}" class="form">
+        {% csrf_token %}
+        {{ inspection_form.as_p }}
+        <button type="submit" class="primary">Guardar inspeccion</button>
+      </form>
+    {% endif %}
+  </article>
+  <article>
+    <h2>Disposicion</h2>
+    {% for disposition in return_request.dispositions.all %}
+      <p>{{ disposition.get_decision_display }} · Valor recuperado {{ disposition.recovered_value }}</p>
+    {% empty %}
+      <form method="post" action="{% url 'reverse_logistics:return_dispose' return_request.pk %}" class="form">
+        {% csrf_token %}
+        {{ disposition_form.as_p }}
+        <button type="submit" class="primary">Guardar disposicion</button>
+      </form>
+    {% endfor %}
+  </article>
+</section>
+{% endblock %}
+

@@ -9,6 +9,8 @@ from apps.purchasing.models import PurchaseOrder
 from apps.production.models import ProductionOrder
 from apps.production.services import get_material_shortages
 from apps.distribution.models import Shipment
+from apps.quality.models import CustomerComplaint, NonConformance
+from apps.reverse_logistics.models import ReturnRequest
 
 from .models import Decision, PeriodResult, Simulation, SimulationEvent, SimulationPeriod
 
@@ -88,6 +90,23 @@ def process_current_period(simulation):
         company=company,
         status__in=[Shipment.Status.DISPATCHED, Shipment.Status.IN_TRANSIT],
     ).count()
+    open_complaint_count = CustomerComplaint.objects.filter(
+        company=company,
+        status__in=[CustomerComplaint.Status.OPEN, CustomerComplaint.Status.IN_PROGRESS],
+    ).count()
+    open_nonconformance_count = NonConformance.objects.filter(
+        inspection__company=company,
+        status__in=[NonConformance.Status.OPEN, NonConformance.Status.REVIEW],
+    ).count()
+    open_return_count = ReturnRequest.objects.filter(
+        company=company,
+        status__in=[
+            ReturnRequest.Status.REQUESTED,
+            ReturnRequest.Status.AUTHORIZED,
+            ReturnRequest.Status.RECEIVED,
+            ReturnRequest.Status.INSPECTED,
+        ],
+    ).count()
 
     operational_score = _calculate_operational_score(
         product_count=product_count,
@@ -128,6 +147,9 @@ def process_current_period(simulation):
         production_shortages,
         open_customer_order_count,
         open_shipment_count,
+        open_complaint_count,
+        open_nonconformance_count,
+        open_return_count,
     )
 
     period.status = SimulationPeriod.Status.CLOSED
@@ -204,6 +226,9 @@ def _create_period_events(
     production_shortages,
     open_customer_order_count,
     open_shipment_count,
+    open_complaint_count,
+    open_nonconformance_count,
+    open_return_count,
 ):
     SimulationEvent.objects.create(
         period=period,
@@ -287,5 +312,29 @@ def _create_period_events(
             period=period,
             name="Despachos en transito",
             description=f"Existen {open_shipment_count} despachos sin entrega confirmada.",
+            severity=SimulationEvent.Severity.PREVENTIVE,
+        )
+
+    if open_complaint_count:
+        SimulationEvent.objects.create(
+            period=period,
+            name="Reclamos abiertos",
+            description=f"Existen {open_complaint_count} reclamos de cliente abiertos o en proceso.",
+            severity=SimulationEvent.Severity.IMPORTANT,
+        )
+
+    if open_nonconformance_count:
+        SimulationEvent.objects.create(
+            period=period,
+            name="No conformidades abiertas",
+            description=f"Existen {open_nonconformance_count} no conformidades pendientes de cierre.",
+            severity=SimulationEvent.Severity.IMPORTANT,
+        )
+
+    if open_return_count:
+        SimulationEvent.objects.create(
+            period=period,
+            name="Devoluciones abiertas",
+            description=f"Existen {open_return_count} devoluciones pendientes de disposicion o cierre.",
             severity=SimulationEvent.Severity.PREVENTIVE,
         )

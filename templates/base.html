@@ -22,6 +22,8 @@
           <a href="{% url 'mrp:list' %}">MRP</a>
           <a href="{% url 'orders:list' %}">Pedidos</a>
           <a href="{% url 'distribution:shipment_list' %}">Despachos</a>
+          <a href="{% url 'quality:inspection_list' %}">Calidad</a>
+          <a href="{% url 'reverse_logistics:return_list' %}">Devoluciones</a>
         {% endif %}
         <form method="post" action="{% url 'accounts:logout' %}">
           {% csrf_token %}

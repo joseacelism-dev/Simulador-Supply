@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Reclamos | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Servicio al cliente</p>
+  <h1>Reclamos</h1>
+  <div class="list">
+    {% for complaint in complaints %}
+      <a class="list-row" href="{% url 'quality:complaint_detail' complaint.pk %}">
+        <strong>{{ complaint.code }}</strong>
+        <span>{{ complaint.product.name }} · {{ complaint.reason }} · {{ complaint.get_status_display }}</span>
+      </a>
+    {% empty %}
+      <p class="empty">Aun no existen reclamos.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
