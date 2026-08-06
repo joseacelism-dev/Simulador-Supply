@@ -12,6 +12,7 @@ from apps.distribution.models import Shipment
 from apps.quality.models import CustomerComplaint, NonConformance
 from apps.reverse_logistics.models import ReturnRequest
 from apps.finance.services import calculate_financial_summary
+from apps.indicators.services import generate_company_indicators
 from apps.risks.models import RiskEvent
 from apps.sustainability.models import SustainabilityRecord
 
@@ -141,6 +142,7 @@ def process_current_period(simulation):
             ),
         },
     )
+    generate_company_indicators(company, simulation=simulation, period=period)
 
     _create_period_events(
         period,

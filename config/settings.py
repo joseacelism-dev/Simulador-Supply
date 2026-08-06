@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     "apps.finance",
     "apps.risks",
     "apps.sustainability",
+    "apps.indicators",
+    "apps.reports",
 ]
 
 MIDDLEWARE = [

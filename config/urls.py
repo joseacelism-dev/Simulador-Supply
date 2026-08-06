@@ -24,4 +24,6 @@ urlpatterns = [
     path("finanzas/", include("apps.finance.urls")),
     path("riesgos/", include("apps.risks.urls")),
     path("sostenibilidad/", include("apps.sustainability.urls")),
+    path("indicadores/", include("apps.indicators.urls")),
+    path("reportes/", include("apps.reports.urls")),
 ]

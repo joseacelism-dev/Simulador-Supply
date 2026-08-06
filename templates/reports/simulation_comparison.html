@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Comparar simulaciones | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Comparacion</p>
+  <h1>Comparacion de simulaciones</h1>
+  <div class="list">
+    {% for row in rows %}
+      <div class="list-row">
+        <strong>{{ row.simulation.name }}</strong>
+        <span>{{ row.simulation.company.name }} · {{ row.status }} · Periodos cerrados {{ row.closed_periods }} · Puntaje promedio {{ row.average_score }}</span>
+      </div>
+    {% empty %}
+      <p class="empty">Aun no existen simulaciones para comparar.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

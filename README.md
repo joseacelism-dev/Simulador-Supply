@@ -12,7 +12,7 @@ https://github.com/joseacelism-dev/Simulador-Supply
 
 ## Estado Actual
 
-Fase actual implementada: **Fase 8 - Finanzas, riesgos y sostenibilidad**.
+Fase actual implementada: **Fase 9 - Indicadores, dashboards y reportes**.
 
 El proyecto ya incluye:
 
@@ -34,6 +34,7 @@ El proyecto ya incluye:
 - Almacenes, stock terminado, pedidos, transportadores, rutas y despachos.
 - Inspecciones de calidad, reclamos, devoluciones y disposicion de retornos.
 - Transacciones financieras, riesgos operacionales e indicadores ambientales.
+- Indicadores, dashboard general, comparacion de simulaciones y exporte CSV.
 
 ## Stack Propuesto
 
@@ -76,6 +77,7 @@ Infraestructura:
 - [Plan de Fase 6](docs/06-fase-6-almacenamiento-pedidos-distribucion.md)
 - [Plan de Fase 7](docs/07-fase-7-calidad-logistica-inversa.md)
 - [Plan de Fase 8](docs/08-fase-8-finanzas-riesgos-sostenibilidad.md)
+- [Plan de Fase 9](docs/09-fase-9-indicadores-dashboards-reportes.md)
 - [Arquitectura propuesta](docs/arquitectura.md)
 - [Roadmap por fases](docs/roadmap.md)
 - [Reglas de desarrollo](docs/reglas-desarrollo.md)

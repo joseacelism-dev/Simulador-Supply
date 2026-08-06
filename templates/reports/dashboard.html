@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | SCM SimLab 360{% endblock %}
+
+{% block content %}
+{% if company %}
+<section class="dashboard">
+  <p class="eyebrow">Dashboard general</p>
+  <h1>{{ company.name }}</h1>
+  <div class="grid">
+    <article class="metric">
+      <span>Flujo de caja</span>
+      <strong>{{ financial.cash_flow }}</strong>
+    </article>
+    <article class="metric">
+      <span>Utilidad</span>
+      <strong>{{ financial.profit }}</strong>
+    </article>
+    <article class="metric">
+      <span>Alertas criticas</span>
+      <strong>{{ critical_count }}</strong>
+    </article>
+    <article class="metric">
+      <span>Advertencias</span>
+      <strong>{{ warning_count }}</strong>
+    </article>
+  </div>
+</section>
+<section class="catalog-grid">
+  <article>
+    <h2>Indicadores</h2>
+    {% for indicator in indicators %}
+      <p>{{ indicator.name }} · {{ indicator.result }} {{ indicator.unit }} · {{ indicator.get_traffic_light_display }}</p>
+    {% empty %}
+      <p class="empty">Sin indicadores generados.</p>
+    {% endfor %}
+  </article>
+  <article>
+    <h2>Simulaciones recientes</h2>
+    {% for simulation in simulations %}
+      <p>{{ simulation.name }} · {{ simulation.get_status_display }}</p>
+    {% empty %}
+      <p class="empty">Sin simulaciones.</p>
+    {% endfor %}
+  </article>
+</section>
+{% else %}
+<section class="dashboard">
+  <h1>Dashboard general</h1>
+  <p class="empty">Crea una empresa para ver resultados.</p>
+</section>
+{% endif %}
+{% endblock %}
+

@@ -27,6 +27,8 @@
           <a href="{% url 'finance:snapshot_list' %}">Finanzas</a>
           <a href="{% url 'risks:list' %}">Riesgos</a>
           <a href="{% url 'sustainability:list' %}">Sostenibilidad</a>
+          <a href="{% url 'indicators:list' %}">Indicadores</a>
+          <a href="{% url 'reports:dashboard' %}">Dashboard</a>
         {% endif %}
         <form method="post" action="{% url 'accounts:logout' %}">
           {% csrf_token %}

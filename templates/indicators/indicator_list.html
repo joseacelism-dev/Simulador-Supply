@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Indicadores | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Indicadores</p>
+  <h1>Indicadores de desempeno</h1>
+  <div class="actions">
+    <a class="secondary" href="{% url 'indicators:export_csv' %}">Exportar CSV</a>
+    <a class="secondary" href="{% url 'reports:compare_simulations' %}">Comparar simulaciones</a>
+  </div>
+  <div class="list">
+    {% for indicator in indicators %}
+      <div class="list-row">
+        <strong>{{ indicator.name }}</strong>
+        <span>{{ indicator.company.name }} · {{ indicator.result }} {{ indicator.unit }} · Meta {{ indicator.target }} · {{ indicator.get_traffic_light_display }}</span>
+        <span>{{ indicator.recommendation }}</span>
+      </div>
+    {% empty %}
+      <p class="empty">Aun no existen indicadores. Genera indicadores desde el detalle de una empresa.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
