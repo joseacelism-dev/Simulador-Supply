@@ -5,6 +5,8 @@ from django.utils import timezone
 
 from apps.inventory.services import get_inventory_alerts
 from apps.purchasing.models import PurchaseOrder
+from apps.production.models import ProductionOrder
+from apps.production.services import get_material_shortages
 
 from .models import Decision, PeriodResult, Simulation, SimulationEvent, SimulationPeriod
 
@@ -58,6 +60,18 @@ def process_current_period(simulation):
         ],
     ).count()
     inventory_alerts = get_inventory_alerts(company)
+    open_production_orders = ProductionOrder.objects.filter(
+        company=company,
+        status__in=[
+            ProductionOrder.Status.PLANNED,
+            ProductionOrder.Status.RELEASED,
+            ProductionOrder.Status.WAITING,
+            ProductionOrder.Status.IN_PROCESS,
+        ],
+    )
+    production_shortages = []
+    for order in open_production_orders:
+        production_shortages.extend(get_material_shortages(order))
 
     operational_score = _calculate_operational_score(
         product_count=product_count,
@@ -94,6 +108,8 @@ def process_current_period(simulation):
         customer_count,
         pending_purchase_count,
         inventory_alerts,
+        open_production_orders.count(),
+        production_shortages,
     )
 
     period.status = SimulationPeriod.Status.CLOSED
@@ -166,6 +182,8 @@ def _create_period_events(
     customer_count,
     pending_purchase_count,
     inventory_alerts,
+    open_production_count,
+    production_shortages,
 ):
     SimulationEvent.objects.create(
         period=period,
@@ -215,4 +233,23 @@ def _create_period_events(
                 f"frente a punto de reorden {alert['reorder_point']}."
             ),
             severity=SimulationEvent.Severity.IMPORTANT,
+        )
+
+    if open_production_count:
+        SimulationEvent.objects.create(
+            period=period,
+            name="Ordenes de produccion abiertas",
+            description=f"Existen {open_production_count} ordenes de produccion sin finalizar.",
+            severity=SimulationEvent.Severity.PREVENTIVE,
+        )
+
+    for shortage in production_shortages:
+        SimulationEvent.objects.create(
+            period=period,
+            name="Faltante para produccion",
+            description=(
+                f"{shortage['raw_material'].name}: requerido {shortage['required']}, "
+                f"disponible {shortage['available']}."
+            ),
+            severity=SimulationEvent.Severity.CRITICAL,
         )

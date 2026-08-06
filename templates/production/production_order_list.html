@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Ordenes de produccion | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Produccion</p>
+  <h1>Ordenes de produccion</h1>
+  <div class="list">
+    {% for order in orders %}
+      <a class="list-row" href="{% url 'production:order_detail' order.pk %}">
+        <strong>{{ order.code }}</strong>
+        <span>{{ order.company.name }} · {{ order.product.name }} · {{ order.quantity }} · {{ order.get_status_display }}</span>
+      </a>
+    {% empty %}
+      <p class="empty">Aun no existen ordenes de produccion.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

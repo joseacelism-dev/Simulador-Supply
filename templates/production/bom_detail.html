@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ bom.product.name }} | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">{{ bom.company.name }}</p>
+  <h1>BOM de {{ bom.product.name }}</h1>
+  <p>Version {{ bom.version }} · Costo unitario estimado {{ bom.estimated_unit_cost }}</p>
+</section>
+
+<section class="catalog-grid">
+  <article>
+    <h2>Materiales</h2>
+    {% for line in bom.lines.all %}
+      <p>{{ line.raw_material.name }} · {{ line.quantity_per_unit }} por unidad · Merma {{ line.scrap_percentage }}%</p>
+    {% empty %}
+      <p class="empty">Sin materiales registrados.</p>
+    {% endfor %}
+  </article>
+</section>
+{% endblock %}
+

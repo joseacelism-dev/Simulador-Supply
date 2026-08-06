@@ -44,6 +44,7 @@ class InventoryItem(models.Model):
 class InventoryMovement(models.Model):
     class MovementType(models.TextChoices):
         PURCHASE_RECEIPT = "recepcion_compra", "Recepcion de compra"
+        PRODUCTION_CONSUMPTION = "consumo_produccion", "Consumo de produccion"
         ADJUSTMENT_IN = "ajuste_entrada", "Ajuste de entrada"
         ADJUSTMENT_OUT = "ajuste_salida", "Ajuste de salida"
 

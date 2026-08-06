@@ -29,6 +29,9 @@
     <a class="secondary" href="{% url 'simulations:create_for_company' company.pk %}">Crear simulacion</a>
     <a class="secondary" href="{% url 'purchasing:create_for_company' company.pk %}">Crear compra</a>
     <a class="secondary" href="{% url 'inventory:policy_create_for_company' company.pk %}">Politica de inventario</a>
+    <a class="secondary" href="{% url 'production:bom_create_for_company' company.pk %}">Crear BOM</a>
+    <a class="secondary" href="{% url 'production:order_create_for_company' company.pk %}">Orden de produccion</a>
+    <a class="secondary" href="{% url 'mrp:create_for_company' company.pk %}">Crear MRP</a>
   </div>
 </section>
 

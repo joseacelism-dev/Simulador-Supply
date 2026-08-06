@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{ plan.name }} | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">{{ plan.company.name }}</p>
+  <h1>{{ plan.name }}</h1>
+  <p>{{ plan.product.name }} · Demanda bruta {{ plan.gross_demand }}</p>
+</section>
+
+<section class="catalog-grid">
+  {% for line in plan.lines.all %}
+    <article>
+      <h2>{{ line.raw_material.name }}</h2>
+      <p>Necesidad bruta: {{ line.gross_requirement }}</p>
+      <p>Inventario disponible: {{ line.available_inventory }}</p>
+      <p>Recepciones programadas: {{ line.scheduled_receipts }}</p>
+      <p>Necesidad neta: {{ line.net_requirement }}</p>
+      <p>Orden planificada: {{ line.planned_order_quantity }}</p>
+    </article>
+  {% empty %}
+    <p class="empty">Sin lineas MRP generadas.</p>
+  {% endfor %}
+</section>
+{% endblock %}
+

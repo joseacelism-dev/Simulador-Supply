@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Crear orden de produccion | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="auth-panel">
+  <h1>Crear orden de produccion</h1>
+  <p>Empresa: {{ company.name }}</p>
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="primary">Guardar orden</button>
+  </form>
+</section>
+{% endblock %}
+

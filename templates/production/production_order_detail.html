@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}{{ order.code }} | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">{{ order.company.name }}</p>
+  <h1>{{ order.code }}</h1>
+  <p>{{ order.product.name }} · {{ order.quantity }} unidades · {{ order.get_status_display }}</p>
+  <div class="grid">
+    <article class="metric">
+      <span>Costo estimado</span>
+      <strong>{{ order.company.currency }} {{ order.estimated_cost }}</strong>
+    </article>
+    <article class="metric">
+      <span>Estrategia</span>
+      <strong>{{ order.get_strategy_display }}</strong>
+    </article>
+    <article class="metric">
+      <span>Merma</span>
+      <strong>{{ order.waste_quantity }}</strong>
+    </article>
+  </div>
+  {% if order.can_complete %}
+    <form method="post" action="{% url 'production:order_complete' order.pk %}" class="inline-action">
+      {% csrf_token %}
+      <button type="submit" class="primary">Completar orden</button>
+    </form>
+  {% endif %}
+</section>
+
+<section class="catalog-grid">
+  <article>
+    <h2>Faltantes</h2>
+    {% for shortage in shortages %}
+      <p>{{ shortage.raw_material.name }} · Requerido {{ shortage.required }} · Disponible {{ shortage.available }}</p>
+    {% empty %}
+      <p class="empty">No hay faltantes para esta orden.</p>
+    {% endfor %}
+  </article>
+</section>
+{% endblock %}
+

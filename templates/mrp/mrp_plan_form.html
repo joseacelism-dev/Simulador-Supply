@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Crear MRP | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="auth-panel">
+  <h1>Crear plan MRP</h1>
+  <p>Empresa: {{ company.name }}</p>
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="primary">Generar MRP</button>
+  </form>
+</section>
+{% endblock %}
+

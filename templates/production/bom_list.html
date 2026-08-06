@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}BOM | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Produccion</p>
+  <h1>Listas de materiales</h1>
+  <div class="list">
+    {% for bom in boms %}
+      <a class="list-row" href="{% url 'production:bom_detail' bom.pk %}">
+        <strong>{{ bom.product.name }}</strong>
+        <span>{{ bom.company.name }} · Version {{ bom.version }} · Costo estimado {{ bom.estimated_unit_cost }}</span>
+      </a>
+    {% empty %}
+      <p class="empty">Aun no existen BOM registradas.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

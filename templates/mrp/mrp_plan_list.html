@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}MRP | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">MRP</p>
+  <h1>Planes MRP</h1>
+  <div class="list">
+    {% for plan in plans %}
+      <a class="list-row" href="{% url 'mrp:detail' plan.pk %}">
+        <strong>{{ plan.name }}</strong>
+        <span>{{ plan.company.name }} · {{ plan.product.name }} · Demanda {{ plan.gross_demand }}</span>
+      </a>
+    {% empty %}
+      <p class="empty">Aun no existen planes MRP.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

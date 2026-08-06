@@ -12,7 +12,7 @@ https://github.com/joseacelism-dev/Simulador-Supply
 
 ## Estado Actual
 
-Fase actual implementada: **Fase 4 - Aprovisionamiento e inventarios**.
+Fase actual implementada: **Fase 5 - Produccion y MRP**.
 
 El proyecto ya incluye:
 
@@ -29,6 +29,8 @@ El proyecto ya incluye:
 - Periodos, decisiones, eventos y resultados basicos.
 - Ordenes de compra para materias primas.
 - Inventario inicial de materias primas, movimientos, EOQ y punto de reorden.
+- BOM, ordenes de produccion y consumo de materias primas.
+- MRP inicial con necesidades netas y ordenes planificadas.
 
 ## Stack Propuesto
 
@@ -67,6 +69,7 @@ Infraestructura:
 - [Plan de Fase 2](docs/02-fase-2-empresas-catalogos.md)
 - [Plan de Fase 3](docs/03-fase-3-motor-simulacion.md)
 - [Plan de Fase 4](docs/04-fase-4-aprovisionamiento-inventarios.md)
+- [Plan de Fase 5](docs/05-fase-5-produccion-mrp.md)
 - [Arquitectura propuesta](docs/arquitectura.md)
 - [Roadmap por fases](docs/roadmap.md)
 - [Reglas de desarrollo](docs/reglas-desarrollo.md)
