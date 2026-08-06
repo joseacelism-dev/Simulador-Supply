@@ -66,6 +66,18 @@ Infraestructura:
 - Variables de entorno
 - Railway para despliegue
 
+## Despliegue Railway
+
+El proyecto esta preparado para Railway con `Procfile`, `railway.json`, Gunicorn, WhiteNoise y soporte para PostgreSQL mediante `DATABASE_URL`.
+
+Variables recomendadas:
+
+- `SECRET_KEY`
+- `DEBUG=False`
+- `ALLOWED_HOSTS=.railway.app`
+- `CSRF_TRUSTED_ORIGINS=https://*.railway.app`
+- `DATABASE_URL=${{Postgres.DATABASE_URL}}`
+
 ## Documentacion
 
 - [Plan de Fase 0](docs/00-fase-0.md)
@@ -78,6 +90,7 @@ Infraestructura:
 - [Plan de Fase 7](docs/07-fase-7-calidad-logistica-inversa.md)
 - [Plan de Fase 8](docs/08-fase-8-finanzas-riesgos-sostenibilidad.md)
 - [Plan de Fase 9](docs/09-fase-9-indicadores-dashboards-reportes.md)
+- [Despliegue Railway](docs/10-despliegue-railway.md)
 - [Arquitectura propuesta](docs/arquitectura.md)
 - [Roadmap por fases](docs/roadmap.md)
 - [Reglas de desarrollo](docs/reglas-desarrollo.md)
