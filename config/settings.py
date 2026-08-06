@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     "apps.distribution",
     "apps.quality",
     "apps.reverse_logistics",
+    "apps.finance",
+    "apps.risks",
+    "apps.sustainability",
 ]
 
 MIDDLEWARE = [

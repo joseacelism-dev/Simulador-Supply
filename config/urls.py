@@ -21,4 +21,7 @@ urlpatterns = [
     path("distribucion/", include("apps.distribution.urls")),
     path("calidad/", include("apps.quality.urls")),
     path("logistica-inversa/", include("apps.reverse_logistics.urls")),
+    path("finanzas/", include("apps.finance.urls")),
+    path("riesgos/", include("apps.risks.urls")),
+    path("sostenibilidad/", include("apps.sustainability.urls")),
 ]

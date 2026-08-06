@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Transacciones | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Finanzas</p>
+  <h1>Transacciones financieras</h1>
+  <div class="list">
+    {% for transaction in transactions %}
+      <div class="list-row">
+        <strong>{{ transaction.description }}</strong>
+        <span>{{ transaction.company.name }} · {{ transaction.get_category_display }} · {{ transaction.amount }}</span>
+      </div>
+    {% empty %}
+      <p class="empty">Aun no existen transacciones.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

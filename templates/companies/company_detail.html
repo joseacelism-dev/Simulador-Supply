@@ -38,6 +38,9 @@
     <a class="secondary" href="{% url 'quality:inspection_create_for_company' company.pk %}">Inspeccion calidad</a>
     <a class="secondary" href="{% url 'quality:complaint_create_for_company' company.pk %}">Registrar reclamo</a>
     <a class="secondary" href="{% url 'reverse_logistics:return_create_for_company' company.pk %}">Crear devolucion</a>
+    <a class="secondary" href="{% url 'finance:transaction_create_for_company' company.pk %}">Registrar finanza</a>
+    <a class="secondary" href="{% url 'risks:create_for_company' company.pk %}">Registrar riesgo</a>
+    <a class="secondary" href="{% url 'sustainability:create_for_company' company.pk %}">Registro sostenible</a>
   </div>
 </section>
 

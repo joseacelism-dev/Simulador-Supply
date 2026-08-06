@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar finanza | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="auth-panel">
+  <h1>Registrar transaccion financiera</h1>
+  <p>Empresa: {{ company.name }}</p>
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="primary">Guardar transaccion</button>
+  </form>
+</section>
+<section class="catalog-grid">
+  <article>
+    <h2>Resumen actual</h2>
+    <p>Ingresos: {{ summary.total_revenue }}</p>
+    <p>Costos: {{ summary.total_costs }}</p>
+    <p>Utilidad: {{ summary.profit }}</p>
+    <p>Flujo de caja: {{ summary.cash_flow }}</p>
+  </article>
+</section>
+{% endblock %}
+

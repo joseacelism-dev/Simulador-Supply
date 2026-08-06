@@ -11,6 +11,9 @@ from apps.production.services import get_material_shortages
 from apps.distribution.models import Shipment
 from apps.quality.models import CustomerComplaint, NonConformance
 from apps.reverse_logistics.models import ReturnRequest
+from apps.finance.services import calculate_financial_summary
+from apps.risks.models import RiskEvent
+from apps.sustainability.models import SustainabilityRecord
 
 from .models import Decision, PeriodResult, Simulation, SimulationEvent, SimulationPeriod
 
@@ -107,6 +110,9 @@ def process_current_period(simulation):
             ReturnRequest.Status.INSPECTED,
         ],
     ).count()
+    financial_summary = calculate_financial_summary(company)
+    open_risk_count = RiskEvent.objects.filter(company=company, status=RiskEvent.Status.OPEN).count()
+    latest_sustainability = SustainabilityRecord.objects.filter(company=company).first()
 
     operational_score = _calculate_operational_score(
         product_count=product_count,
@@ -150,6 +156,9 @@ def process_current_period(simulation):
         open_complaint_count,
         open_nonconformance_count,
         open_return_count,
+        financial_summary,
+        open_risk_count,
+        latest_sustainability,
     )
 
     period.status = SimulationPeriod.Status.CLOSED
@@ -229,6 +238,9 @@ def _create_period_events(
     open_complaint_count,
     open_nonconformance_count,
     open_return_count,
+    financial_summary,
+    open_risk_count,
+    latest_sustainability,
 ):
     SimulationEvent.objects.create(
         period=period,
@@ -337,4 +349,28 @@ def _create_period_events(
             name="Devoluciones abiertas",
             description=f"Existen {open_return_count} devoluciones pendientes de disposicion o cierre.",
             severity=SimulationEvent.Severity.PREVENTIVE,
+        )
+
+    if financial_summary["cash_flow"] < 0:
+        SimulationEvent.objects.create(
+            period=period,
+            name="Flujo de caja negativo",
+            description=f"El flujo de caja estimado es {financial_summary['cash_flow']}.",
+            severity=SimulationEvent.Severity.CRITICAL,
+        )
+
+    if open_risk_count:
+        SimulationEvent.objects.create(
+            period=period,
+            name="Riesgos abiertos",
+            description=f"Existen {open_risk_count} eventos de riesgo abiertos.",
+            severity=SimulationEvent.Severity.IMPORTANT,
+        )
+
+    if latest_sustainability and latest_sustainability.transport_emissions_kg > 0:
+        SimulationEvent.objects.create(
+            period=period,
+            name="Emisiones registradas",
+            description=f"Ultimo registro ambiental: {latest_sustainability.transport_emissions_kg} kg CO2e en transporte.",
+            severity=SimulationEvent.Severity.INFO,
         )

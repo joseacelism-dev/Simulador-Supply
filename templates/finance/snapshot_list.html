@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Resumen financiero | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Finanzas</p>
+  <h1>Resumenes financieros</h1>
+  <div class="list">
+    {% for snapshot in snapshots %}
+      <div class="list-row">
+        <strong>{{ snapshot.name }}</strong>
+        <span>{{ snapshot.company.name }} · Utilidad {{ snapshot.profit }} · Margen {{ snapshot.margin }}% · Flujo {{ snapshot.cash_flow }}</span>
+      </div>
+    {% empty %}
+      <p class="empty">Aun no existen resumenes financieros.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

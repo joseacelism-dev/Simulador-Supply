@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}{{ risk.title }} | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">{{ risk.company.name }}</p>
+  <h1>{{ risk.title }}</h1>
+  <p>{{ risk.get_category_display }} · {{ risk.get_status_display }}</p>
+  <div class="grid">
+    <article class="metric">
+      <span>Probabilidad</span>
+      <strong>{{ risk.probability }}%</strong>
+    </article>
+    <article class="metric">
+      <span>Impacto</span>
+      <strong>{{ risk.impact }}%</strong>
+    </article>
+    <article class="metric">
+      <span>Exposicion</span>
+      <strong>{{ risk.exposure_score }}</strong>
+    </article>
+  </div>
+</section>
+<section class="catalog-grid">
+  <article>
+    <h2>Respuestas</h2>
+    {% for response in risk.responses.all %}
+      <p>{{ response.get_strategy_display }} · {{ response.effectiveness }}% · {{ response.estimated_cost }}</p>
+    {% empty %}
+      <form method="post" action="{% url 'risks:response_create' risk.pk %}" class="form">
+        {% csrf_token %}
+        {{ response_form.as_p }}
+        <button type="submit" class="primary">Guardar respuesta</button>
+      </form>
+    {% endfor %}
+  </article>
+</section>
+{% endblock %}
+

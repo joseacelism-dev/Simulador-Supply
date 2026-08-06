@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{{ record.period_label }} | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">{{ record.company.name }}</p>
+  <h1>{{ record.period_label }}</h1>
+  <div class="grid">
+    <article class="metric">
+      <span>Energia</span>
+      <strong>{{ record.energy_kwh }} kWh</strong>
+    </article>
+    <article class="metric">
+      <span>Agua</span>
+      <strong>{{ record.water_m3 }} m3</strong>
+    </article>
+    <article class="metric">
+      <span>Emisiones</span>
+      <strong>{{ record.total_emissions }} kg</strong>
+    </article>
+    <article class="metric">
+      <span>Residuos recuperados</span>
+      <strong>{{ record.recovered_waste_percentage }}%</strong>
+    </article>
+  </div>
+</section>
+{% endblock %}
+

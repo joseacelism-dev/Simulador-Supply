@@ -24,6 +24,9 @@
           <a href="{% url 'distribution:shipment_list' %}">Despachos</a>
           <a href="{% url 'quality:inspection_list' %}">Calidad</a>
           <a href="{% url 'reverse_logistics:return_list' %}">Devoluciones</a>
+          <a href="{% url 'finance:snapshot_list' %}">Finanzas</a>
+          <a href="{% url 'risks:list' %}">Riesgos</a>
+          <a href="{% url 'sustainability:list' %}">Sostenibilidad</a>
         {% endif %}
         <form method="post" action="{% url 'accounts:logout' %}">
           {% csrf_token %}

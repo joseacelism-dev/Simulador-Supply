@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Sostenibilidad | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Sostenibilidad</p>
+  <h1>Registros ambientales</h1>
+  <div class="list">
+    {% for record in records %}
+      <a class="list-row" href="{% url 'sustainability:detail' record.pk %}">
+        <strong>{{ record.period_label }}</strong>
+        <span>{{ record.company.name }} · Emisiones {{ record.total_emissions }} kg CO2e · Recuperacion {{ record.recovered_waste_percentage }}%</span>
+      </a>
+    {% empty %}
+      <p class="empty">Aun no existen registros ambientales.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

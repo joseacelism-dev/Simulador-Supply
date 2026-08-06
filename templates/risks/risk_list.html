@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Riesgos | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Riesgos</p>
+  <h1>Eventos de riesgo</h1>
+  <div class="list">
+    {% for risk in risks %}
+      <a class="list-row" href="{% url 'risks:detail' risk.pk %}">
+        <strong>{{ risk.title }}</strong>
+        <span>{{ risk.get_category_display }} · Exposicion {{ risk.exposure_score }} · {{ risk.get_status_display }}</span>
+      </a>
+    {% empty %}
+      <p class="empty">Aun no existen riesgos registrados.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
