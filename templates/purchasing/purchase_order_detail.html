@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{{ purchase_order.code }} | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">{{ purchase_order.company.name }}</p>
+  <h1>{{ purchase_order.code }}</h1>
+  <p>Proveedor: {{ purchase_order.supplier.name }} · Estado: {{ purchase_order.get_status_display }}</p>
+  <div class="grid">
+    <article class="metric">
+      <span>Fecha esperada</span>
+      <strong>{{ purchase_order.expected_receipt_date|default:"Pendiente" }}</strong>
+    </article>
+    <article class="metric">
+      <span>Total</span>
+      <strong>{{ purchase_order.company.currency }} {{ purchase_order.total_cost }}</strong>
+    </article>
+    <article class="metric">
+      <span>Lead time</span>
+      <strong>{{ purchase_order.supplier.lead_time_days }} dias</strong>
+    </article>
+  </div>
+  {% if purchase_order.can_receive %}
+    <form method="post" action="{% url 'purchasing:receive' purchase_order.pk %}" class="inline-action">
+      {% csrf_token %}
+      <button type="submit" class="primary">Recibir orden</button>
+    </form>
+  {% endif %}
+</section>
+
+<section class="catalog-grid">
+  <article>
+    <h2>Lineas</h2>
+    {% for line in purchase_order.lines.all %}
+      <p>{{ line.raw_material.name }} · {{ line.quantity }} {{ line.raw_material.unit }} · {{ line.unit_cost }}</p>
+    {% endfor %}
+  </article>
+</section>
+{% endblock %}
+

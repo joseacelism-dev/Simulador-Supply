@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Politica de inventario | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="auth-panel">
+  <h1>Politica de inventario</h1>
+  <p>Empresa: {{ company.name }}</p>
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="primary">Guardar politica</button>
+  </form>
+</section>
+
+<section class="catalog-grid">
+  <article>
+    <h2>Politicas actuales</h2>
+    {% for policy in policies %}
+      <p>{{ policy.raw_material.name }} · EOQ {{ policy.eoq }} · Punto de reorden {{ policy.reorder_point }}</p>
+    {% empty %}
+      <p class="empty">Sin politicas registradas.</p>
+    {% endfor %}
+  </article>
+  <article>
+    <h2>Alertas</h2>
+    {% for alert in alerts %}
+      <p>{{ alert.material.name }} · Disponible {{ alert.available }} · Reorden {{ alert.reorder_point }}</p>
+    {% empty %}
+      <p class="empty">Sin alertas de inventario.</p>
+    {% endfor %}
+  </article>
+</section>
+{% endblock %}
+

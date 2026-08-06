@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Crear compra | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="auth-panel">
+  <h1>Crear orden de compra</h1>
+  <p>Empresa: {{ company.name }}</p>
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ order_form.as_p }}
+    {{ line_form.as_p }}
+    <button type="submit" class="primary">Guardar compra</button>
+  </form>
+</section>
+{% endblock %}
+

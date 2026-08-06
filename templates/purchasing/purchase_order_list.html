@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Compras | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Aprovisionamiento</p>
+  <h1>Ordenes de compra</h1>
+  <div class="list">
+    {% for order in purchase_orders %}
+      <a class="list-row" href="{% url 'purchasing:detail' order.pk %}">
+        <strong>{{ order.code }}</strong>
+        <span>{{ order.company.name }} · {{ order.supplier.name }} · {{ order.get_status_display }}</span>
+      </a>
+    {% empty %}
+      <p class="empty">Aun no existen ordenes de compra.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

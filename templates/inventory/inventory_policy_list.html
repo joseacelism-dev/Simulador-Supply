@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Politicas | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Inventarios</p>
+  <h1>Politicas de inventario</h1>
+  <div class="list">
+    {% for policy in policies %}
+      <div class="list-row">
+        <strong>{{ policy.raw_material.name }}</strong>
+        <span>{{ policy.company.name }} · EOQ {{ policy.eoq }} · Punto de reorden {{ policy.reorder_point }}</span>
+      </div>
+    {% empty %}
+      <p class="empty">Aun no existen politicas de inventario.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

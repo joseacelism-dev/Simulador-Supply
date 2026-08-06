@@ -3,6 +3,9 @@ from decimal import Decimal
 from django.db import transaction
 from django.utils import timezone
 
+from apps.inventory.services import get_inventory_alerts
+from apps.purchasing.models import PurchaseOrder
+
 from .models import Decision, PeriodResult, Simulation, SimulationEvent, SimulationPeriod
 
 
@@ -47,6 +50,14 @@ def process_current_period(simulation):
     supplier_count = company.suppliers.count()
     customer_count = company.customers.count()
     decision_count = decisions.count()
+    pending_purchase_count = PurchaseOrder.objects.filter(
+        company=company,
+        status__in=[
+            PurchaseOrder.Status.ORDERED,
+            PurchaseOrder.Status.PARTIALLY_RECEIVED,
+        ],
+    ).count()
+    inventory_alerts = get_inventory_alerts(company)
 
     operational_score = _calculate_operational_score(
         product_count=product_count,
@@ -76,7 +87,14 @@ def process_current_period(simulation):
         },
     )
 
-    _create_period_events(period, decision_count, supplier_count, customer_count)
+    _create_period_events(
+        period,
+        decision_count,
+        supplier_count,
+        customer_count,
+        pending_purchase_count,
+        inventory_alerts,
+    )
 
     period.status = SimulationPeriod.Status.CLOSED
     period.closed_at = timezone.now()
@@ -141,7 +159,14 @@ def _build_summary(
     )
 
 
-def _create_period_events(period, decision_count, supplier_count, customer_count):
+def _create_period_events(
+    period,
+    decision_count,
+    supplier_count,
+    customer_count,
+    pending_purchase_count,
+    inventory_alerts,
+):
     SimulationEvent.objects.create(
         period=period,
         name="Periodo procesado",
@@ -173,3 +198,21 @@ def _create_period_events(period, decision_count, supplier_count, customer_count
             severity=SimulationEvent.Severity.IMPORTANT,
         )
 
+    if pending_purchase_count:
+        SimulationEvent.objects.create(
+            period=period,
+            name="Compras pendientes",
+            description=f"Existen {pending_purchase_count} ordenes de compra pendientes de recepcion.",
+            severity=SimulationEvent.Severity.PREVENTIVE,
+        )
+
+    for alert in inventory_alerts:
+        SimulationEvent.objects.create(
+            period=period,
+            name="Inventario bajo",
+            description=(
+                f"{alert['material'].name}: disponible {alert['available']} "
+                f"frente a punto de reorden {alert['reorder_point']}."
+            ),
+            severity=SimulationEvent.Severity.IMPORTANT,
+        )

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Inventarios | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Inventarios</p>
+  <h1>Inventario de materias primas</h1>
+  <div class="list">
+    {% for item in inventory_items %}
+      <div class="list-row">
+        <strong>{{ item.raw_material.name }}</strong>
+        <span>{{ item.company.name }} · Disponible: {{ item.quantity_available }} {{ item.raw_material.unit }} · En transito: {{ item.quantity_in_transit }}</span>
+      </div>
+    {% empty %}
+      <p class="empty">Aun no existen existencias registradas.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

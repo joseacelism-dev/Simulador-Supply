@@ -16,6 +16,8 @@
         {% if user.is_estudiante %}
           <a href="{% url 'companies:list' %}">Mis empresas</a>
           <a href="{% url 'simulations:list' %}">Simulaciones</a>
+          <a href="{% url 'purchasing:list' %}">Compras</a>
+          <a href="{% url 'inventory:list' %}">Inventarios</a>
         {% endif %}
         <form method="post" action="{% url 'accounts:logout' %}">
           {% csrf_token %}
