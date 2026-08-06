@@ -43,6 +43,10 @@ class TeacherRequiredMixin(UserPassesTestMixin):
         return self.request.user.is_authenticated and self.request.user.is_admin_docente
 
 
+class StudentRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_estudiante
+
+
 class TeacherDashboardView(LoginRequiredMixin, TeacherRequiredMixin, TemplateView):
     template_name = "dashboard/teacher.html"
-

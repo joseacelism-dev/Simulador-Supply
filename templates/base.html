@@ -13,6 +13,9 @@
     <nav class="nav">
       {% if user.is_authenticated %}
         <a href="{% url 'accounts:post_login_redirect' %}">Panel</a>
+        {% if user.is_estudiante %}
+          <a href="{% url 'companies:list' %}">Mis empresas</a>
+        {% endif %}
         <form method="post" action="{% url 'accounts:logout' %}">
           {% csrf_token %}
           <button type="submit">Salir</button>
@@ -28,4 +31,3 @@
   </main>
 </body>
 </html>
-

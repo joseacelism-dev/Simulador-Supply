@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Empresas creadas | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Consulta docente</p>
+  <h1>Empresas creadas</h1>
+  <div class="list">
+    {% for company in companies %}
+      <div class="list-row">
+        <strong>{{ company.name }}</strong>
+        <span>{{ company.owner.username }} · {{ company.company_type.name }} · {{ company.city }}</span>
+      </div>
+    {% empty %}
+      <p class="empty">Aun no existen empresas creadas.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

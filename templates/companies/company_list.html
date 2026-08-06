@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Mis empresas | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Empresas</p>
+  <h1>Mis empresas</h1>
+  <div class="actions">
+    <a class="primary" href="{% url 'companies:create' %}">Crear empresa</a>
+  </div>
+  <div class="list">
+    {% for company in companies %}
+      <a class="list-row" href="{% url 'companies:detail' company.pk %}">
+        <strong>{{ company.name }}</strong>
+        <span>{{ company.company_type.name }} · {{ company.city }}, {{ company.country }}</span>
+      </a>
+    {% empty %}
+      <p class="empty">Aun no has creado empresas.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

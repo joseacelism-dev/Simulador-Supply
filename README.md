@@ -12,17 +12,19 @@ https://github.com/joseacelism-dev/Simulador-Supply
 
 ## Estado Actual
 
-Fase actual: **Fase 0 - Preparacion del proyecto**.
+Fase actual implementada: **Fase 2 - Empresas y catalogos base**.
 
-En esta fase se definen:
+El proyecto ya incluye:
 
-- Alcance inicial.
-- Arquitectura propuesta.
-- Estructura de carpetas.
-- Stack tecnologico.
-- Roadmap por fases.
-- Reglas de desarrollo.
-- Criterios de preparacion antes de iniciar la Fase 1.
+- Documentacion de Fase 0, Fase 1 y Fase 2.
+- Base Django.
+- Usuario personalizado.
+- Registro e inicio de sesion.
+- Roles de administrador docente y estudiante.
+- Paneles iniciales por rol.
+- Empresas por estudiante.
+- Cinco tipos de empresa iniciales.
+- Catalogos base de productos, materias primas, proveedores y clientes.
 
 ## Stack Propuesto
 
@@ -57,7 +59,8 @@ Infraestructura:
 ## Documentacion
 
 - [Plan de Fase 0](docs/00-fase-0.md)
+- [Plan de Fase 1](docs/01-fase-1-base-sistema.md)
+- [Plan de Fase 2](docs/02-fase-2-empresas-catalogos.md)
 - [Arquitectura propuesta](docs/arquitectura.md)
 - [Roadmap por fases](docs/roadmap.md)
 - [Reglas de desarrollo](docs/reglas-desarrollo.md)
-

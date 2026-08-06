@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}{{ company.name }} | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">{{ company.company_type.name }}</p>
+  <h1>{{ company.name }}</h1>
+  <p>{{ company.city }}, {{ company.country }} · Mercado: {{ company.target_market }}</p>
+  <div class="grid">
+    <article class="metric">
+      <span>Capital inicial</span>
+      <strong>{{ company.currency }} {{ company.initial_capital }}</strong>
+    </article>
+    <article class="metric">
+      <span>Capacidad inicial</span>
+      <strong>{{ company.initial_capacity }}</strong>
+    </article>
+    <article class="metric">
+      <span>Dificultad</span>
+      <strong>{{ company.get_difficulty_display }}</strong>
+    </article>
+  </div>
+  <div class="actions">
+    <a class="primary" href="{% url 'products:create' company.pk %}">Agregar producto</a>
+    <a class="secondary" href="{% url 'products:raw_material_create' company.pk %}">Agregar materia prima</a>
+    <a class="secondary" href="{% url 'suppliers:create' company.pk %}">Agregar proveedor</a>
+    <a class="secondary" href="{% url 'customers:create' company.pk %}">Agregar cliente</a>
+  </div>
+</section>
+
+<section class="catalog-grid">
+  <article>
+    <h2>Productos</h2>
+    {% for product in company.products.all %}
+      <p>{{ product.sku }} · {{ product.name }} · {{ product.unit }}</p>
+    {% empty %}
+      <p class="empty">Sin productos registrados.</p>
+    {% endfor %}
+  </article>
+  <article>
+    <h2>Materias primas</h2>
+    {% for material in company.raw_materials.all %}
+      <p>{{ material.sku }} · {{ material.name }} · {{ material.unit }}</p>
+    {% empty %}
+      <p class="empty">Sin materias primas registradas.</p>
+    {% endfor %}
+  </article>
+  <article>
+    <h2>Proveedores</h2>
+    {% for supplier in company.suppliers.all %}
+      <p>{{ supplier.name }} · {{ supplier.location }} · {{ supplier.reliability }}%</p>
+    {% empty %}
+      <p class="empty">Sin proveedores registrados.</p>
+    {% endfor %}
+  </article>
+  <article>
+    <h2>Clientes</h2>
+    {% for customer in company.customers.all %}
+      <p>{{ customer.name }} · {{ customer.segment }} · {{ customer.city }}</p>
+    {% empty %}
+      <p class="empty">Sin clientes registrados.</p>
+    {% endfor %}
+  </article>
+</section>
+{% endblock %}
+

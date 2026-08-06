@@ -24,6 +24,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "apps.accounts",
+    "apps.companies",
+    "apps.products",
+    "apps.suppliers",
+    "apps.customers",
 ]
 
 MIDDLEWARE = [
@@ -85,4 +89,3 @@ AUTH_USER_MODEL = "accounts.User"
 LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "accounts:post_login_redirect"
 LOGOUT_REDIRECT_URL = "home"
-
