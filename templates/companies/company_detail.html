@@ -32,6 +32,9 @@
     <a class="secondary" href="{% url 'production:bom_create_for_company' company.pk %}">Crear BOM</a>
     <a class="secondary" href="{% url 'production:order_create_for_company' company.pk %}">Orden de produccion</a>
     <a class="secondary" href="{% url 'mrp:create_for_company' company.pk %}">Crear MRP</a>
+    <a class="secondary" href="{% url 'warehouses:create_for_company' company.pk %}">Crear almacen</a>
+    <a class="secondary" href="{% url 'orders:create_for_company' company.pk %}">Crear pedido</a>
+    <a class="secondary" href="{% url 'distribution:carrier_create_for_company' company.pk %}">Crear transportador</a>
   </div>
 </section>
 

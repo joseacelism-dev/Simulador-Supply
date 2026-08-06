@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Transportadores | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Distribucion</p>
+  <h1>Transportadores</h1>
+  <div class="list">
+    {% for carrier in carriers %}
+      <div class="list-row">
+        <strong>{{ carrier.name }}</strong>
+        <span>Nivel de servicio {{ carrier.service_level }}% · Costo/km {{ carrier.cost_per_km }}</span>
+      </div>
+    {% empty %}
+      <p class="empty">Aun no existen transportadores.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

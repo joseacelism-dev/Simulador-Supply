@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Stock terminado | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Producto terminado</p>
+  <h1>Stock terminado</h1>
+  <div class="list">
+    {% for stock in stocks %}
+      <div class="list-row">
+        <strong>{{ stock.product.name }}</strong>
+        <span>{{ stock.warehouse.name }} · Disponible {{ stock.quantity_available }} · Comprometido {{ stock.quantity_committed }}</span>
+      </div>
+    {% empty %}
+      <p class="empty">Aun no hay stock terminado.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

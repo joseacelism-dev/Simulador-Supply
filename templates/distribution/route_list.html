@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Rutas | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Distribucion</p>
+  <h1>Rutas</h1>
+  <div class="list">
+    {% for route in routes %}
+      <div class="list-row">
+        <strong>{{ route.name }}</strong>
+        <span>{{ route.origin_city }} a {{ route.destination_city }} · {{ route.distance_km }} km · {{ route.estimated_days }} dias</span>
+      </div>
+    {% empty %}
+      <p class="empty">Aun no existen rutas.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

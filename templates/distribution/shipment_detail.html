@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ shipment.code }} | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">{{ shipment.company.name }}</p>
+  <h1>{{ shipment.code }}</h1>
+  <p>{{ shipment.order.code }} · {{ shipment.carrier.name }} · {{ shipment.get_status_display }}</p>
+  <div class="grid">
+    <article class="metric">
+      <span>Ruta</span>
+      <strong>{{ shipment.route.name }}</strong>
+    </article>
+    <article class="metric">
+      <span>Costo</span>
+      <strong>{{ shipment.shipping_cost }}</strong>
+    </article>
+    <article class="metric">
+      <span>Almacen</span>
+      <strong>{{ shipment.warehouse.name }}</strong>
+    </article>
+  </div>
+  {% if shipment.status != "entregado" %}
+    <form method="post" action="{% url 'distribution:shipment_deliver' shipment.pk %}" class="inline-action">
+      {% csrf_token %}
+      <button type="submit" class="primary">Marcar entregado</button>
+    </form>
+  {% endif %}
+</section>
+{% endblock %}
+

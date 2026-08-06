@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Despachos | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Distribucion</p>
+  <h1>Despachos</h1>
+  <div class="list">
+    {% for shipment in shipments %}
+      <a class="list-row" href="{% url 'distribution:shipment_detail' shipment.pk %}">
+        <strong>{{ shipment.code }}</strong>
+        <span>{{ shipment.order.code }} · {{ shipment.carrier.name }} · {{ shipment.get_status_display }}</span>
+      </a>
+    {% empty %}
+      <p class="empty">Aun no existen despachos.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

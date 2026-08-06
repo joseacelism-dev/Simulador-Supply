@@ -20,6 +20,8 @@
           <a href="{% url 'inventory:list' %}">Inventarios</a>
           <a href="{% url 'production:order_list' %}">Produccion</a>
           <a href="{% url 'mrp:list' %}">MRP</a>
+          <a href="{% url 'orders:list' %}">Pedidos</a>
+          <a href="{% url 'distribution:shipment_list' %}">Despachos</a>
         {% endif %}
         <form method="post" action="{% url 'accounts:logout' %}">
           {% csrf_token %}

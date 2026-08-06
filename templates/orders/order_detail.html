@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ order.code }} | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">{{ order.company.name }}</p>
+  <h1>{{ order.code }}</h1>
+  <p>{{ order.customer.name }} · {{ order.get_status_display }} · Prioridad {{ order.priority }}</p>
+  <div class="actions">
+    <a class="primary" href="{% url 'distribution:shipment_create_for_company' order.company.pk %}">Crear despacho</a>
+  </div>
+</section>
+<section class="catalog-grid">
+  <article>
+    <h2>Lineas</h2>
+    {% for line in order.lines.all %}
+      <p>{{ line.product.name }} · {{ line.quantity }} · {{ line.unit_price }}</p>
+    {% endfor %}
+  </article>
+</section>
+{% endblock %}
+

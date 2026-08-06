@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Crear pedido | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="auth-panel">
+  <h1>Crear pedido</h1>
+  <p>Empresa: {{ company.name }}</p>
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ order_form.as_p }}
+    {{ line_form.as_p }}
+    <button type="submit" class="primary">Guardar pedido</button>
+  </form>
+</section>
+{% endblock %}
+

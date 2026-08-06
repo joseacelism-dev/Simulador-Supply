@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Pedidos | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Pedidos</p>
+  <h1>Pedidos de clientes</h1>
+  <div class="list">
+    {% for order in orders %}
+      <a class="list-row" href="{% url 'orders:detail' order.pk %}">
+        <strong>{{ order.code }}</strong>
+        <span>{{ order.customer.name }} · {{ order.get_status_display }} · Total {{ order.total_amount }}</span>
+      </a>
+    {% empty %}
+      <p class="empty">Aun no existen pedidos.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

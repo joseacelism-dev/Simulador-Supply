@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Almacenes | SCM SimLab 360{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+  <p class="eyebrow">Almacenamiento</p>
+  <h1>Almacenes</h1>
+  <div class="list">
+    {% for warehouse in warehouses %}
+      <div class="list-row">
+        <strong>{{ warehouse.name }}</strong>
+        <span>{{ warehouse.company.name }} · {{ warehouse.city }} · Capacidad {{ warehouse.capacity_units }}</span>
+      </div>
+    {% empty %}
+      <p class="empty">Aun no existen almacenes.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

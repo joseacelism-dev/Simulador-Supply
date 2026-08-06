@@ -4,9 +4,11 @@ from django.db import transaction
 from django.utils import timezone
 
 from apps.inventory.services import get_inventory_alerts
+from apps.orders.models import CustomerOrder
 from apps.purchasing.models import PurchaseOrder
 from apps.production.models import ProductionOrder
 from apps.production.services import get_material_shortages
+from apps.distribution.models import Shipment
 
 from .models import Decision, PeriodResult, Simulation, SimulationEvent, SimulationPeriod
 
@@ -72,6 +74,20 @@ def process_current_period(simulation):
     production_shortages = []
     for order in open_production_orders:
         production_shortages.extend(get_material_shortages(order))
+    open_customer_order_count = CustomerOrder.objects.filter(
+        company=company,
+        status__in=[
+            CustomerOrder.Status.CREATED,
+            CustomerOrder.Status.PREPARING,
+            CustomerOrder.Status.PACKED,
+            CustomerOrder.Status.BACKORDER,
+            CustomerOrder.Status.PARTIAL,
+        ],
+    ).count()
+    open_shipment_count = Shipment.objects.filter(
+        company=company,
+        status__in=[Shipment.Status.DISPATCHED, Shipment.Status.IN_TRANSIT],
+    ).count()
 
     operational_score = _calculate_operational_score(
         product_count=product_count,
@@ -110,6 +126,8 @@ def process_current_period(simulation):
         inventory_alerts,
         open_production_orders.count(),
         production_shortages,
+        open_customer_order_count,
+        open_shipment_count,
     )
 
     period.status = SimulationPeriod.Status.CLOSED
@@ -184,6 +202,8 @@ def _create_period_events(
     inventory_alerts,
     open_production_count,
     production_shortages,
+    open_customer_order_count,
+    open_shipment_count,
 ):
     SimulationEvent.objects.create(
         period=period,
@@ -252,4 +272,20 @@ def _create_period_events(
                 f"disponible {shortage['available']}."
             ),
             severity=SimulationEvent.Severity.CRITICAL,
+        )
+
+    if open_customer_order_count:
+        SimulationEvent.objects.create(
+            period=period,
+            name="Pedidos pendientes",
+            description=f"Existen {open_customer_order_count} pedidos de cliente pendientes de despacho o cumplimiento.",
+            severity=SimulationEvent.Severity.PREVENTIVE,
+        )
+
+    if open_shipment_count:
+        SimulationEvent.objects.create(
+            period=period,
+            name="Despachos en transito",
+            description=f"Existen {open_shipment_count} despachos sin entrega confirmada.",
+            severity=SimulationEvent.Severity.PREVENTIVE,
         )
